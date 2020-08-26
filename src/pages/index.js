@@ -733,6 +733,7 @@ function IconsContainer() {
           <p className="hidden sm:block flex-none w-full text-sm leading-5 mt-3">
             For primary navigation and marketing sections, designed to be
             rendered at 24x24.
+            Tailwind CSS: use h-6 and w-6 to style the medium icons.
           </p>
         </header>
         <Icons
@@ -752,6 +753,7 @@ function IconsContainer() {
           <p className="hidden sm:block flex-none w-full text-sm leading-5 mt-3">
             For buttons, form elements, and to support text, designed to be
             rendered at 20x20.
+            Tailwind CSS: use h-5 and w-5 to style the small icons.
           </p>
         </header>
         <Icons
