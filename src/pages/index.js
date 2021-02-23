@@ -660,6 +660,7 @@ function Search() {
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={`Search all ${iconsMedium.length} icons (Press “/” to focus)`}
           className="flex-auto py-6 text-base leading-6 text-gray-500 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400"
+          autofocus=""
         />
       </div>
     </form>
