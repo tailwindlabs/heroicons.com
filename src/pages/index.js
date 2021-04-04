@@ -94,7 +94,11 @@ function copyIcon(icon, as) {
   let jsx =
     `<svg` +
     stringifyAttrs(
-      { xmlns: 'http://www.w3.org/2000/svg', ...icon.attrs },
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        ...(icon.type === 'sm' ? { className: 'h-5 w-5' } : { className: 'h-6 w-6' }),
+        ...icon.attrs,
+      },
       (a) => !['width', 'height'].includes(a)
     ) +
     `>` +
@@ -125,6 +129,7 @@ function copyIcon(icon, as) {
   }
 
   let svg = jsx
+    .replace('className=', 'class=')
     .replace(/=\{([^}]+)\}/g, '="$1"')
     .replace(
       /(\s)([a-z]+)="/gi,
