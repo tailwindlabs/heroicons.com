@@ -7,6 +7,6 @@ updates:
     allow:
       - dependency-name: "heroicons"
       - dependency-name: "tailwindcss"
-      - dependency-name: "@tailwindui/*"
+      - dependency-name: "@headlessui/*"
     labels:
       - "dependencies"

@@ -4,7 +4,7 @@ import createStore from 'zustand'
 import clsx from 'clsx'
 import tags from '../data/tags'
 import Alert from '@reach/alert'
-import { Transition } from '@tailwindui/react'
+import { Transition } from '@headlessui/react'
 import Head from 'next/head'
 
 const ENTER = 13
