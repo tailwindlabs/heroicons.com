@@ -122,6 +122,7 @@ export default {
   'switch-vertical': ['arrows'],
   table: ['grid'],
   terminal: ['console', 'cli', 'code'],
+  translate: ['language', 'international', 'i18n', 'l10n', 'intl'],
   trash: ['bin', 'rubbish', 'delete', 'remove', 'garbage'],
   'trending-down': ['decrease', 'analytics'],
   'trending-up': ['increase', 'analytics'],
