@@ -3,7 +3,7 @@ export default {
   adjustments: ['filter', 'settings', 'sliders'],
   annotation: ['speech', 'bubble', 'chat', 'comment', 'response'],
   archive: ['box', 'store'],
-  'at-symbol': ['email'],
+  'at-symbol': ['email', '@'],
   backspace: ['delete'],
   'badge-check': ['tick', 'validated'],
   ban: ['stop', 'block', 'halt', 'end', 'unauthorized', 'bad', 'not-allowed'],
