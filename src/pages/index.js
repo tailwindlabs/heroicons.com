@@ -128,6 +128,14 @@ function copyIcon(icon, as) {
     return navigator.clipboard.writeText(jsx)
   }
 
+  let reactvue = icon.name.replaceAll('-',' ').replace(/\w\S*/g, function(txt){
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  }).replaceAll(' ','')+'Icon'
+
+  if(as === 'react/vue'){
+    return navigator.clipboard.writeText(reactvue)
+  }
+
   let svg = jsx
     .replace('className=', 'class=')
     .replace(/=\{([^}]+)\}/g, '="$1"')
@@ -140,7 +148,6 @@ function copyIcon(icon, as) {
 
   return navigator.clipboard.writeText(svg)
 }
-
 const Icon = memo(({ icon }) => {
   const [state, setState] = useState('idle')
   const [activeType, setActiveType] = useState(undefined)
@@ -177,8 +184,16 @@ const Icon = memo(({ icon }) => {
       setActiveType('svg')
     } else if (activeType === 'svg' && e.which === DOWN) {
       setActiveType('jsx')
+    } else if (activeType === 'jsx' && e.which === DOWN) {
+      setActiveType('react/vue')
     } else if (activeType === 'jsx' && e.which === UP) {
       setActiveType('svg')
+    } else if (activeType === 'react/vue' && e.which === UP) {
+      setActiveType('jsx')
+    } else if (activeType === 'react/vue' && e.which === DOWN) {
+      setActiveType('svg')
+    } else if (activeType === 'svg' && e.which === UP) {
+      setActiveType('react/vue')
     } else if (state === 'active' && activeType && [ENTER, SPACE].includes(e.which)) {
       copy(activeType)
     }
@@ -294,7 +309,7 @@ const Icon = memo(({ icon }) => {
                 tabIndex={-1}
                 role="menuitem"
                 className={clsx(
-                  'relative cursor-pointer leading-[42px] font-medium bg-purple-200 rounded-md text-purple-700 transition-colors duration-150 outline-none',
+                  'relative cursor-pointer leading-[27px] font-medium bg-purple-200 rounded-md text-purple-700 transition-colors duration-150 outline-none',
                   { 'bg-opacity-25': activeType !== 'svg' },
                   { 'bg-opacity-75': activeType === 'svg' }
                 )}
@@ -309,7 +324,7 @@ const Icon = memo(({ icon }) => {
                 tabIndex={-1}
                 role="menuitem"
                 className={clsx(
-                  'relative cursor-pointer mt-1 leading-[42px] font-medium bg-purple-200 rounded-md text-purple-700 transition-colors duration-150 outline-none',
+                  'relative cursor-pointer my-1 leading-[27px] font-medium bg-purple-200 rounded-md text-purple-700 transition-colors duration-150 outline-none',
                   { 'bg-opacity-25': activeType !== 'jsx' },
                   { 'bg-opacity-75': activeType === 'jsx' }
                 )}
@@ -318,6 +333,21 @@ const Icon = memo(({ icon }) => {
                 onClick={() => copy('jsx')}
               >
                 Copy JSX
+              </div>
+              <div
+                id={`${icon.name}-${icon.type}-react/vue`}
+                tabIndex={-1}
+                role="menuitem"
+                className={clsx(
+                  'relative cursor-pointer leading-[27px] font-medium bg-purple-200 rounded-md text-purple-700 transition-colors duration-150 outline-none',
+                  { 'bg-opacity-25': activeType !== 'react/vue' },
+                  { 'bg-opacity-75': activeType === 'react/vue' }
+                )}
+                onMouseEnter={() => setActiveType('react/vue')}
+                onMouseLeave={() => setActiveType(undefined)}
+                onClick={() => copy('react/vue')}
+              >
+                Copy React/Vue
               </div>
             </div>
           )}
