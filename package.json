@@ -20,7 +20,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "simple-functional-loader": "^1.2.1",
-    "tailwindcss": "^2.1.1",
+    "tailwindcss": "^2.2.2",
     "zustand": "^3.0.1"
   }
 }
