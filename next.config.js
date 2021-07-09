@@ -1,11 +1,9 @@
 const { createLoader } = require('simple-functional-loader')
 
 module.exports = {
-  experimental: {
-    modern: true,
-    polyfillsOptimization: true,
+  images: {
+    disableStaticImages: true,
   },
-
   webpack(config, options) {
     config.module.rules.push({
       test: /\.svg$/i,
@@ -17,18 +15,13 @@ module.exports = {
               .replace(/>(\s|\\n)+</g, '><')
               .replace(/\\n$/, '')
               .replace(/\\"/g, '"')
-              .replace(
-                /(\s)([a-z-]+)="([^"]+)"/gi,
-                (_, prefix, attr, value) => {
-                  const jsxValue = /^[0-9.]+$/.test(value)
-                    ? `{${value}}`
-                    : `"${value}"`
-                  return `${prefix}${attr.replace(
-                    /-([a-z])/gi,
-                    (_, letter) => `${letter.toUpperCase()}`
-                  )}=${jsxValue}`
-                }
-              )
+              .replace(/(\s)([a-z-]+)="([^"]+)"/gi, (_, prefix, attr, value) => {
+                const jsxValue = /^[0-9.]+$/.test(value) ? `{${value}}` : `"${value}"`
+                return `${prefix}${attr.replace(
+                  /-([a-z])/gi,
+                  (_, letter) => `${letter.toUpperCase()}`
+                )}=${jsxValue}`
+              })
               .replace(
                 /<svg[^>]+>(.*?)<\/svg>/s,
                 (svg.match(/</g) || []).length > 3 ? '(<>$1</>)' : '($1)'

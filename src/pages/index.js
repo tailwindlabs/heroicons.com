@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, memo } from 'react'
+import { useRef, useEffect, useState, memo, Fragment } from 'react'
 import matchSorter from 'match-sorter'
 import createStore from 'zustand'
 import clsx from 'clsx'
@@ -248,6 +248,7 @@ const Icon = memo(({ icon }) => {
           </svg>
         </button>
         <Transition
+          as={Fragment}
           show={state === 'copied'}
           enter="transition-opacity duration-300 ease-out"
           enterFrom="opacity-0"
@@ -256,16 +257,12 @@ const Icon = memo(({ icon }) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          {(ref) => (
-            <Alert
-              ref={ref}
-              className="absolute bottom-1 left-0 right-0 pointer-events-none text-center font-medium pb-4 text-purple-700"
-            >
-              Copied<span className="sr-only"> {icon.name}</span>!
-            </Alert>
-          )}
+          <Alert className="absolute bottom-1 left-0 right-0 pointer-events-none text-center font-medium pb-4 text-purple-700">
+            Copied<span className="sr-only"> {icon.name}</span>!
+          </Alert>
         </Transition>
         <Transition
+          as={Fragment}
           show={state === 'active'}
           enter="transition-opacity duration-100 ease-in-out"
           enterFrom="opacity-0"
@@ -274,53 +271,50 @@ const Icon = memo(({ icon }) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          {(ref) => (
+          <div
+            id={`${icon.name}-${icon.type}`}
+            role="menu"
+            aria-labelledby={`${icon.name}-${icon.type}-btn`}
+            tabIndex={-1}
+            aria-activedescendant={
+              activeType ? `${icon.name}-${icon.type}-${activeType}` : undefined
+            }
+            className={clsx('absolute inset-0 z-10 p-1', {
+              'pointer-events-none': state !== 'active',
+            })}
+          >
+            <div className="absolute top-1/2 left-1/2 w-8 h-8 -ml-4 -mt-4 bg-white bg-opacity-75" />
             <div
-              ref={ref}
-              id={`${icon.name}-${icon.type}`}
-              role="menu"
-              aria-labelledby={`${icon.name}-${icon.type}-btn`}
+              id={`${icon.name}-${icon.type}-svg`}
               tabIndex={-1}
-              aria-activedescendant={
-                activeType ? `${icon.name}-${icon.type}-${activeType}` : undefined
-              }
-              className={clsx('absolute inset-0 z-10 p-1', {
-                'pointer-events-none': state !== 'active',
-              })}
+              role="menuitem"
+              className={clsx(
+                'relative cursor-pointer leading-[42px] font-medium bg-purple-200 rounded-md text-purple-700 transition-colors duration-150 outline-none',
+                { 'bg-opacity-25': activeType !== 'svg' },
+                { 'bg-opacity-75': activeType === 'svg' }
+              )}
+              onMouseEnter={() => setActiveType('svg')}
+              onMouseLeave={() => setActiveType(undefined)}
+              onClick={() => copy('svg')}
             >
-              <div className="absolute top-1/2 left-1/2 w-8 h-8 -ml-4 -mt-4 bg-white bg-opacity-75" />
-              <div
-                id={`${icon.name}-${icon.type}-svg`}
-                tabIndex={-1}
-                role="menuitem"
-                className={clsx(
-                  'relative cursor-pointer leading-[42px] font-medium bg-purple-200 rounded-md text-purple-700 transition-colors duration-150 outline-none',
-                  { 'bg-opacity-25': activeType !== 'svg' },
-                  { 'bg-opacity-75': activeType === 'svg' }
-                )}
-                onMouseEnter={() => setActiveType('svg')}
-                onMouseLeave={() => setActiveType(undefined)}
-                onClick={() => copy('svg')}
-              >
-                Copy SVG
-              </div>
-              <div
-                id={`${icon.name}-${icon.type}-jsx`}
-                tabIndex={-1}
-                role="menuitem"
-                className={clsx(
-                  'relative cursor-pointer mt-1 leading-[42px] font-medium bg-purple-200 rounded-md text-purple-700 transition-colors duration-150 outline-none',
-                  { 'bg-opacity-25': activeType !== 'jsx' },
-                  { 'bg-opacity-75': activeType === 'jsx' }
-                )}
-                onMouseEnter={() => setActiveType('jsx')}
-                onMouseLeave={() => setActiveType(undefined)}
-                onClick={() => copy('jsx')}
-              >
-                Copy JSX
-              </div>
+              Copy SVG
             </div>
-          )}
+            <div
+              id={`${icon.name}-${icon.type}-jsx`}
+              tabIndex={-1}
+              role="menuitem"
+              className={clsx(
+                'relative cursor-pointer mt-1 leading-[42px] font-medium bg-purple-200 rounded-md text-purple-700 transition-colors duration-150 outline-none',
+                { 'bg-opacity-25': activeType !== 'jsx' },
+                { 'bg-opacity-75': activeType === 'jsx' }
+              )}
+              onMouseEnter={() => setActiveType('jsx')}
+              onMouseLeave={() => setActiveType(undefined)}
+              onClick={() => copy('jsx')}
+            >
+              Copy JSX
+            </div>
+          </div>
         </Transition>
       </div>
     </li>
